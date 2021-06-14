@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ArticleService {
+struct ArticleService: Codable {
     
     var totalResults: Int?
     var articles: [Article]?

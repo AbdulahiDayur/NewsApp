@@ -7,11 +7,23 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, ArticleModelProtocol {
+    
+    var model = ArticleModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        model.delegate = self
+        
+        // Get the articles from the article model
+        model.getArticles()
+    }
+    
+    // Mark: - Article Model Protocol Methods
+    
+    func articlesRetrieve(_ article: [Article]) {
+        print("Articles returned from model")
     }
 
 

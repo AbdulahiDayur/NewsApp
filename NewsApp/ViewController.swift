@@ -7,13 +7,19 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController{
+    
+    @IBOutlet var tableView: UITableView!
+    
     
     var model = ArticleModel()
     var articles = [Article]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
         
         model.delegate = self
         
@@ -24,6 +30,26 @@ class ViewController: UIViewController {
 
 }
 
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return articles.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ArticleCell", for: indexPath) as! ArticleCell
+        cell.displayArticle(articles[indexPath.row])
+//        cell.textLabel?.text = articles[indexPath.row].title
+//        cell.headlineLabel.text = articles[indexPath.row].title
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+}
+
 
 extension ViewController: ArticleModelProtocol{
     
@@ -32,7 +58,8 @@ extension ViewController: ArticleModelProtocol{
     func articlesRetrieve(_ article: [Article]) {
         
         self.articles = article
-        print(article[0].description!)
+        
+        tableView.reloadData()
     }
 }
 

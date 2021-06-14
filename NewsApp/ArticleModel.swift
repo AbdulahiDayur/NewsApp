@@ -19,10 +19,12 @@ class ArticleModel {
     func getArticles() {
         
         // Fire off the request to the API
+        let apiKey = "3e73bf1df0164755b30b6838105d42e3"
         
         // Parse the returned JSON into article instances and pass it back to the vc
-        // With the Protocol and delegate patteren
+        // With the Protocol and delegate pattern
         delegate?.articlesRetrieve([Article]())
-        
     }
+    
+    
 }

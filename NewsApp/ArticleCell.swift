@@ -35,6 +35,16 @@ class ArticleCell: UITableViewCell {
         
         // Download the display image
         let urlString = articleToDisplay!.urlToImage!
+        
+        // Check cacheManager before downloading  any image data
+        if let imageData = CacheManager.retrieveData(urlString) {
+            
+            // There is imageData, set the imageView
+            articleImageView.image = UIImage(data: imageData)
+            
+            return
+        }
+        
         let url = URL(string: urlString)
         
         guard url != nil else {
@@ -46,10 +56,12 @@ class ArticleCell: UITableViewCell {
         
         let dataTask = session.dataTask(with: url!) { (data, response, error) in
             if error == nil && data != nil {
+                
+                // Save the data into Cache
+                CacheManager.saveData(urlString, data!)
             
                 // Check if the url string that the data task went off to download
                 // Matches the article this cell is set to display
-                
                 if self.articleToDisplay!.urlToImage == urlString {
                     DispatchQueue.main.async {
                         self.articleImageView.image = UIImage(data: data!)

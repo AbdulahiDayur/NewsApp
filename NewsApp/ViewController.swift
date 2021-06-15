@@ -39,14 +39,15 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ArticleCell", for: indexPath) as! ArticleCell
         cell.displayArticle(articles[indexPath.row])
-//        cell.textLabel?.text = articles[indexPath.row].title
-//        cell.headlineLabel.text = articles[indexPath.row].title
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = DetailViewController()
         
+        vc.detailItem = articles[indexPath.row]
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
